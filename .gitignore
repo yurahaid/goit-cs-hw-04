@@ -1,0 +1,6 @@
+.idea
+.venv
+__pycache__
+dist
+website_status.log
+/**/.venv

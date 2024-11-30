@@ -14,9 +14,10 @@ def find_keywords_in_file(file_path, keywords):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
+            words = content.split()
 
             for keyword in keywords:
-                if keyword in content:
+                if keyword in words:
                     keyword_files[keyword].append(file_path)
     except FileNotFoundError:
         print("The directory does not exist.")
@@ -34,7 +35,7 @@ def find_keywords_in_files(directory, keywords):
     """
     files = [os.path.join(directory, filename) for filename in os.listdir(directory)]
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         keyword_files = {}
         for result in executor.map(lambda file_path: find_keywords_in_file(file_path, keywords), files):
             for keyword, paths in result.items():
